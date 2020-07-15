@@ -1,0 +1,73 @@
+*tinker*
+int led=8; 
+char dato;
+
+void setup()
+{
+  Serial.begin (9600);
+  pinMode(led, OUTPUT);
+}
+
+void loop()
+{
+  
+  if (Serial.available()>0)
+  {
+    dato=Serial.read();
+    
+    if (dato=='e')
+    {
+      digitalWrite(led,HIGH);
+    }
+    if(dato=='a')
+    {
+      digitalWrite (led,LOW);
+    }
+    
+  }
+  
+  delay(1000); 
+}
+
+
+*presentación proyecto 2*
+namespace arduino
+{
+    class Program
+    {
+        static SerialPort Arduino = new SerialPort("COM1",9600); 
+        static void Main(string[] args)
+        {
+            //Nelly Odette Pérez Osoy, Caroline Mishell Saquic Rodas, Khaterine Jazmín Yanes Alvarado, Diego Pablo Huertas Guitierrez 
+
+            int e;
+            
+            Arduino.Open();
+            Console.WriteLine("LUCESITA");
+            Console.WriteLine("1. encender lucesita");
+            Console.WriteLine("2. apagar lucesita");
+            e= Convert.ToInt32(Console.ReadLine());
+
+            if (Arduino.IsOpen)
+            {
+
+               if (e==1)
+                {
+                    Console.WriteLine("encendida");
+                    byte[] data= Encoding.ASCII.GetBytes("e");
+                    Arduino.Write(data, 0, data.Length);
+
+                }
+                
+
+                          
+            }
+            else
+            {
+                Arduino.Close();
+                Console.WriteLine("apagada");
+            }
+            Console.ReadKey();
+        }
+    }
+}
